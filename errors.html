@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Endale Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/colors.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .error-icon {
+            font-size: 80px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            color: var(--heading-color);
+            margin-bottom: 15px;
+            animation: fadeIn 0.5s ease forwards 0.3s;
+            opacity: 0;
+        }
+
+        .error-message {
+            color: var(--text-color-dark);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: fadeIn 0.5s ease forwards 0.5s;
+            opacity: 0;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            animation: fadeIn 0.5s ease forwards 0.7s;
+            opacity: 0;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-color-dark);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Connection Status Indicator */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .status-online {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-offline {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-dots {
+            display: flex;
+            gap: 5px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: dotPulse 1.5s infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(0.5); opacity: 0.5; }
+            50% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 30px;
+            }
+
+            .error-icon {
+                font-size: 60px;
+            }
+
+            .error-title {
+                font-size: 2rem;
+            }
+
+            .error-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+        <i class="fas fa-wifi"></i>
+        <span>Checking connection...</span>
+    </div>
+
+    <!-- Error Container -->
+    <div class="error-container">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-circle" id="errorIcon"></i>
+        </div>
+        <h1 class="error-title" id="errorTitle">Checking Connection...</h1>
+        <p class="error-message" id="errorMessage">Please wait while we check your internet connection.</p>
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i> Go Home
+            </a>
+            <button onclick="checkConnection()" class="btn btn-secondary">
+                <i class="fas fa-sync-alt"></i> Try Again
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function checkConnection() {
+            const statusDiv = document.getElementById('connectionStatus');
+            const errorIcon = document.getElementById('errorIcon');
+            const errorTitle = document.getElementById('errorTitle');
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (navigator.onLine) {
+                statusDiv.className = 'connection-status status-online';
+                statusDiv.innerHTML = '<i class="fas fa-wifi"></i> Connected';
+                
+                errorIcon.className = 'fas fa-check-circle';
+                errorTitle.textContent = 'Connected!';
+                errorMessage.textContent = 'Your internet connection has been restored.';
+            } else {
+                statusDiv.className = 'connection-status status-offline';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> No Connection';
+                
+                errorIcon.className = 'fas fa-exclamation-circle';
+                errorTitle.textContent = 'No Internet Connection';
+                errorMessage.textContent = 'Please check your internet connection and try again.';
+            }
+        }
+
+        // Check connection status initially and when it changes
+        window.addEventListener('load', checkConnection);
+        window.addEventListener('online', checkConnection);
+        window.addEventListener('offline', checkConnection);
+
+        // Add this to your main index.html
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT') {
+                checkConnection();
+            }
+        }, true);
+    </script>
+</body>
+</html> 

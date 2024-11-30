@@ -1,0 +1,114 @@
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide In Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale Animation */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Apply animations to elements */
+.hero-content,
+.portfolio-item,
+.blog-card,
+.testimonial-card {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* Stagger animations for grid items */
+.portfolio-grid > *,
+.blog-grid > * {
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.portfolio-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.portfolio-grid > *:nth-child(2) { animation-delay: 0.2s; }
+.portfolio-grid > *:nth-child(3) { animation-delay: 0.3s; }
+
+.blog-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.blog-grid > *:nth-child(2) { animation-delay: 0.2s; }
+
+/* Apply new animations */
+.footer-section {
+  animation: slideIn 0.8s ease forwards;
+}
+
+.service-card {
+  animation: scaleIn 0.5s ease forwards;
+}
+
+.footer-section:nth-child(1) { animation-delay: 0.1s; }
+.footer-section:nth-child(2) { animation-delay: 0.2s; }
+.footer-section:nth-child(3) { animation-delay: 0.3s; }
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--card-bg);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content {
+    animation: fadeInUp 1s ease-out;
+}
+
+.service-card {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.service-card:nth-child(1) { animation-delay: 0.2s; }
+.service-card:nth-child(2) { animation-delay: 0.4s; }
+.service-card:nth-child(3) { animation-delay: 0.6s; }
+  
